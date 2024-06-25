@@ -38,6 +38,9 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
+        """
+        Deletion-resilient hypermedia pagination
+        """
         dataset_size = len(self.__indexed_dataset.keys())
         assert index >= 0 and index < dataset_size
         start_index = index

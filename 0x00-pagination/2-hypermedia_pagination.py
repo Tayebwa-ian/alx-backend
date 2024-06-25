@@ -67,12 +67,13 @@ class Server:
             total_pages = dataset_size // page_size
         else:
             total_pages = (dataset_size // page_size) + 1
+        previos_page = page - 1 if page > 1 and page <= total_pages else None
         pagination_info = {
             "page_size": page_size,
             "page": page,
             "data": page_data,
             "next_page": page + 1 if page < total_pages else None,
-            "previous_page": page - 1 if page > 1 else None,
+            "previous_page": previos_page,
             "total_pages": total_pages,
         }
         return pagination_info
