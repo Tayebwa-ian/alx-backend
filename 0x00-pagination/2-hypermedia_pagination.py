@@ -73,7 +73,7 @@ class Server:
             "page": page,
             "data": page_data,
             "next_page": page + 1 if page < total_pages else None,
-            "previous_page": previos_page,
+            "prev_page": previos_page,
             "total_pages": total_pages,
         }
         return pagination_info
