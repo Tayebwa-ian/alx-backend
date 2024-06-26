@@ -48,7 +48,7 @@ class LFUCache(BaseCaching):
             else:
                 self.recently_used[key] = 1
             return result
-        
+
     def discarder(self):
         """
         Calculates the least recently used and returns its key
