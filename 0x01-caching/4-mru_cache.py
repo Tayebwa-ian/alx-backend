@@ -5,14 +5,13 @@
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class LRUCache(BaseCaching):
+class MRUCache (BaseCaching):
     """
     LIFO caching
     """
     def __init__(self):
-        """Initialise the LRUCache class"""
+        """Initialise the MRUCache  class"""
         super().__init__()
-        self.recently_used = {}
 
     def put(self, key, item):
         """
@@ -25,14 +24,10 @@ class LRUCache(BaseCaching):
         if key and item:
             keys = list(self.cache_data.keys())
             if len(keys) == self.MAX_ITEMS and key not in keys:
-                discard_key = self.discarder()
-                print(f"DISCARD: {discard_key}")
-                del self.cache_data[discard_key]
-                del self.recently_used[discard_key]
-            if key in self.recently_used.keys():
-                self.recently_used[key] += 1
-            else:
-                self.recently_used[key] = 1
+                print(f"DISCARD: {keys[-1]}")
+                del self.cache_data[keys[-1]]
+            if key in keys:
+                del self.cache_data[key]
             self.cache_data[key] = item
 
     def get(self, key):
@@ -43,19 +38,6 @@ class LRUCache(BaseCaching):
         """
         result = self.cache_data.get(key)
         if result:
-            if key in self.recently_used.keys():
-                self.recently_used[key] += 1
-            else:
-                self.recently_used[key] = 1
+            del self.cache_data[key]
+            self.cache_data[key] = result
             return result
-        
-    def discarder(self):
-        """
-        Calculates the least recently used and returns its key
-        """
-        temp_dict = self.recently_used
-        keys = list(temp_dict.keys())
-        least_used_key = keys[0]
-        if temp_dict[keys[1]] < temp_dict[least_used_key]:
-            least_used_key = keys[1]
-        return least_used_key
